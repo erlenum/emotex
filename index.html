@@ -4,9 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>EMOTEX</title>
 
-    <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
-    <link rel="stylesheet" type="text/css" href="css/dark-hive/jquery-ui-1.8.10.custom.css"></link>
-
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -19,6 +16,7 @@
 </head>
 <body>
 
+<!-- FB SDK Implementierung  -->
 <script>
     window.fbAsyncInit = function() {
         FB.init({
@@ -51,6 +49,7 @@
 <button id="showfriends" disabled="true">Friends</button>
 
 <button id="logout" disabled="true">Logout</button>
+<button id="feed" disabled="true">FEED</button>
 
 <div id="user" class="content" style="display: none"></div>
 <div id="friends" class="content" style="display: none"></div>

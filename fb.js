@@ -33,15 +33,21 @@ $(document).ready(function () {
         showFriends();
     });
 
-    createMap();
-    initMap();
+    /* make the API call */
+    $("#feed").click(()=>{
+        /* make the API call */
+        FB.api(
+            '/me/feed',
+            'GET',
+            function (response) {
+                //in Console werden meine Posts ausgegeben
+                console.log(response);
+                });
+            }
+        );
+    });
 
-});
 
-////Maps Teile ====
-
-
-//=====================================
 
 function createMap() {
     let longitude = 14.2942;
