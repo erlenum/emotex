@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Trasitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>KWM Facebook App 2017</title>
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/dark-hive/jquery-ui-1.8.10.custom.css"></link>
+
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_HYdthmU5fH9MLNKsM2UOFbPAGvvp5JU"></script>
+
+    <script type="text/javascript" src="fb.js"></script>
+
+</head>
+<body>
+
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '210146979777670',
+            xfbml: true,
+            version: 'v3.0',
+            cookie: true,
+            status: true
+
+        });
+        FB.AppEvents.logPageView();
+        checkLoginStatus();
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+<h1>Hallo, willkommen zur Facebook 2018 App!</h1>
+
+<button id="login">Login</button>
+
+<button id="showdetails" disabled="true">Me</button>
+<button id="showfriends" disabled="true">Friends</button>
+
+<button id="logout" disabled="true">Logout</button>
+
+<div id="user" class="content" style="display: none"></div>
+<div id="friends" class="content" style="display: none"></div>
+<div id="details" class="content" style="display: none"></div>
+<div id="likes" class="content" style="display: none"></div>
+
+<div id="map-canvas"/>
+
+
+</body>
+</html>
