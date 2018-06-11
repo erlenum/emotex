@@ -32,25 +32,28 @@ $(document).ready(function () {
         showFriends();
     });
 
-    /* make the API call */
+    //Feed aus Seite auslesen
     $("#feed").click(()=>{
-        /* make the API call */
         FB.api(
-            '/me/feed',
+            '/socialwapp100/feed',
             'GET',
             function (response) {
-                //in Console werden meine Posts ausgegeben
-                console.log(response);
+                var message = response;
+                //in Console werden Posts ausgegeben
+                console.log(message);
                 });
             }
         );
+
+    //.data["0"].message
+
     });
 
 
 function showMe(){
     FB.api("/me?fields=id,name,birthday,link,email,hometown",function(user){
         if(user!=null){
-            currentUser = user
+            currentUser = user;
             var html ="<div id='pic'><img src='https://graph.facebook.com/" + user.id + "/picture/'></div>";
             html += "<div id='info'>"+user.name + "<br/>";
             html += "<a href='"+user.link+"'>"+user.link+"</a><br/>";
