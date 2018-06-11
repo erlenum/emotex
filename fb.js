@@ -1,3 +1,4 @@
+let map;
 
 $(document).ready(function () {
     console.log("jQuery loaded");
@@ -46,6 +47,49 @@ $(document).ready(function () {
         );
     });
 
+
+
+function createMap() {
+    let longitude = 14.2942;
+    let latitude = 48.31378;
+    let coord = new google.maps.LatLng(latitude,longitude);
+    let opt = {
+        zoom: 13,
+        center: coord,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.querySelector("#map-canvas"),opt);
+
+}
+
+function initMap(){
+    try {
+        //Geolocation API
+        if((typeof navigator.geolocation) == 'undefinded'){
+            alert("Sorry, your browser does not support Geolocation");
+        } else{
+            let gl = navigator.geolocation;
+            gl.getCurrentPosition ((position) => {
+                //geolocation finds long/lat values
+                let loggedInUserPosition = new google.maps.LatLng(
+                    position.coords.latitude, position.coords.longitude
+                );
+                map.setCenter(loggedInUserPosition);
+                let currentLocation = new google.maps.Marker({
+                    position: loggedInUserPosition,
+                    map: map,
+                    title: "Your location"
+                })
+            }, (positionError)=>{
+                //geolocation fails to find lat/long values
+
+            });
+        }
+    }   catch (e) {
+        console.error(e.message);
+    }
+}
+//=======================
 
 function showMe(){
     FB.api("/me?fields=id,name,birthday,link,email,hometown",function(user){
