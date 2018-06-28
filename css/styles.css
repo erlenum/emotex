@@ -1,0 +1,38 @@
+body {
+	font-family: Arial, Helvetica;
+	font-size: 11px;
+	line-height: 200%;
+	background: #0972a5;
+	color: white;
+		
+}
+a {
+	color: white;
+}
+
+#pic {
+	margin-right: 10px;
+	float:left;
+}
+
+.content {
+	width: 800px;
+	padding: 10px;
+	margin-top: 10px;
+	border: 1px solid grey;
+}
+
+.obj {
+	padding: 10px;
+	margin-top: 10px;
+	border: 1px dashed grey;
+}
+
+#map-canvas {
+	width: 600px;
+	height: 500px;
+	float:left;
+	background: #fff;
+	margin : 10px;
+	color: #000;
+}

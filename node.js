@@ -1,5 +1,8 @@
 'use strict';
-let https = require ('https');
+let https = require('https');
+
+
+
 
 // **********************************************
 // *** Update or verify the following values. ***
@@ -51,10 +54,13 @@ let get_language = function (documents) {
     req.end ();
 }
 
+
 let documents = { 'documents': [
+
         { 'id': '1', 'text': 'This is a document written in English.' },
-        { 'id': '2', 'text': 'Este es un document escrito en Español.' },
+        { 'id': '2', 'text':  'Der Test' }, // Hier muss statt diesem Text, unser Text hinein!
         { 'id': '3', 'text': '这是一个用中文写的文件' }
     ]};
 
 get_language (documents);
+

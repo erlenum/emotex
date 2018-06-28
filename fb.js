@@ -13,7 +13,7 @@ $(document).ready(function () {
                 $("#login").attr("disabled",true);
                 showMe ();
             }
-        },{perms: "email, user_birthday, user_location, user_hometown, user_likes, user_friends, user_link"})
+        },{perms: "email, user_birthday, user_location, user_hometown, user_likes, user_friends, user_link, user_feed"})
     });
 
     //logout
@@ -33,37 +33,45 @@ $(document).ready(function () {
     });
 
     //Feed aus Seite auslesen
-    $("#feed").click(()=>{
-        FB.api(
-            '/socialwapp100/feed',
-            'GET',
-            function (response) {
-                var message = response;
-                //in Console werden Posts ausgegeben
-                console.log(message);
-                });
-            }
-        );
+    $("#feed1").click(()=> {
+        showMessage();
+    });
 
     //.data["0"].message
 
     });
 
+//function um message anzuzeigen
+function showMessage() {
+    //Feed leeren
+    $("#feed").empty().hide();
+    //von FB Freunde Daten holen
+    FB.api("/me?fields=feed.limit(3)", (list) => {
+        console.log(list);
+
+        for (let message of list.feed.data){
+            let link = "<p>"+ message.message + "</p>";
+            console.log(link);
+            $("#feed").append(link);
+        }
+    });
+    $("#feed").show();
+}
 
 function showMe(){
-    FB.api("/me?fields=id,name,birthday,link,email,hometown",function(user){
+    FB.api("/me?fields=id,name,birthday,link,email,hometown,feed",function(user){
         if(user!=null){
             currentUser = user;
             var html ="<div id='pic'><img src='https://graph.facebook.com/" + user.id + "/picture/'></div>";
             html += "<div id='info'>"+user.name + "<br/>";
-            html += "<a href='"+user.link+"'>"+user.link+"</a><br/>";
+            //html += "<a href='"+user.link+"'>"+user.link+"</a><br/>";
             html += "email: "  + user.email + " | birthday: " + user.birthday + "</div>";
-            let hometown = user.hometown;
-            if (hometown != null && hometown.name != null){
-                html += "Hometown: " + hometown.name + "</div>";
-            } else {
-                html += "</div>";
-            }
+            //let hometown = user.hometown;
+            //if (hometown != null && hometown.name != null){
+            //    html += "Hometown: " + hometown.name + "</div>";
+            //} else {
+            //    html += "</div>";
+            //}
 
             $("#user").empty();
             $("#user").html(html);
