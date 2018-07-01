@@ -1,0 +1,28 @@
+{
+  "name": "emotex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fb.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "browserify": "^16.2.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "https": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erlenum/emotex.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erlenum/emotex/issues"
+  },
+  "homepage": "https://github.com/erlenum/emotex#readme"
+}
