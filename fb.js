@@ -53,6 +53,26 @@ function showMessage() {
             let link = "<p>"+ message.message + "</p>";
             console.log(link);
             $("#feed").append(link);
+
+            //$.get("http://localhost:8081",function(result){
+            //    console.log(result);
+            //})
+            let obj= {
+                text: link //seine Version war mit "Hier steht ein Text"
+            }
+
+            $.ajax({
+                type:'POST',
+                url: "http://localhost:8081",
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(obj),
+                success: function(answer){
+                    console.log("juhu");
+                    console.log(answer);
+                }
+            })
+
         }
     });
     $("#feed").show();
@@ -64,14 +84,7 @@ function showMe(){
             currentUser = user;
             var html ="<div id='pic'><img src='https://graph.facebook.com/" + user.id + "/picture/'></div>";
             html += "<div id='info'>"+user.name + "<br/>";
-            //html += "<a href='"+user.link+"'>"+user.link+"</a><br/>";
             html += "email: "  + user.email + " | birthday: " + user.birthday + "</div>";
-            //let hometown = user.hometown;
-            //if (hometown != null && hometown.name != null){
-            //    html += "Hometown: " + hometown.name + "</div>";
-            //} else {
-            //    html += "</div>";
-            //}
 
             $("#user").empty();
             $("#user").html(html);

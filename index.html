@@ -12,10 +12,14 @@
             crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="fb.js"></script>
-    <script type="text/javascript" src="node.js"></script>
-
+    <script type="text/javascript" src="server.js"></script>
 </head>
+
+
 <body>
+<div style="width: auto; height: 200px; background-color: #eeeeee;">
+    <img src="img/Logo2.png" style="display: block; margin-left: auto; margin-right: auto; padding-top:35px; width: 110px; height: 140px;" alt=""></img>
+</div>
 
 <!-- FB SDK Implementierung  -->
 <script>
@@ -44,20 +48,17 @@
 
 <h1>Hallo, willkommen zu EMOTEX!</h1>
 
-<button id="login">Login</button>
-
-<button id="showdetails" disabled="true">Me</button>
-<button id="showfriends" disabled="true">Friends</button>
-<button id="logout" disabled="true">Logout</button>
-<button id="feed1" disabled="true">Feed</button>
-<button id="analyse1" disabled="true">Analyse Feed</button>
+<button id="login" style="background-color: #3dbb95; border-color: #3dbb95; color: white;">Login</button>
+<button id="showdetails" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Me</button>
+<button id="showfriends" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Friends</button>
+<button id="logout" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Logout</button>
+<button id="feed1" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Feed</button>
+<button id="analyse1" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Analyse Feed</button>
 
 <div id="user" class="content" style="display: none"></div>
 <div id="friends" class="content" style="display: none"></div>
 <div id="feed" class="content" style="display: none"></div>
 <div id="analyse" class="content" style="display: none"></div>
-
-
 
 </body>
 </html>

@@ -2,7 +2,7 @@ body {
 	font-family: Arial, Helvetica;
 	font-size: 11px;
 	line-height: 200%;
-	background: #0972a5;
+	background: #004360;
 	color: white;
 		
 }
@@ -16,8 +16,11 @@ a {
 }
 
 .content {
+	display: block;
 	width: 800px;
 	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
 	margin-top: 10px;
 	border: 1px solid grey;
 }

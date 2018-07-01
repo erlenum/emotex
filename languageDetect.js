@@ -1,6 +1,10 @@
 'use strict';
 let https = require('https');
 
+module.exports = {
+  getLanguage : get_Language
+}
+
 
 
 
@@ -37,7 +41,7 @@ let response_handler = function (response) {
     });
 };
 
-let get_language = function (documents) {
+function get_Language (documents) {
     let body = JSON.stringify (documents);
 
     let request_params = {
@@ -54,13 +58,14 @@ let get_language = function (documents) {
     req.end ();
 }
 
-
 let documents = { 'documents': [
 
         { 'id': '1', 'text': 'This is a document written in English.' },
-        { 'id': '2', 'text':  'Der Test' }, // Hier muss statt diesem Text, unser Text hinein!
-        { 'id': '3', 'text': '这是一个用中文写的文件' }
+        { 'id': '2', 'text':  'Der Test.' }, // Hier muss statt diesem Text, unser Text hinein!
+        { 'id': '3', 'text': 'Test ' }
     ]};
 
-get_language (documents);
+//get_language (documents);
+
+
 
