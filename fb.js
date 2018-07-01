@@ -51,14 +51,15 @@ function showMessage() {
 
         for (let message of list.feed.data){
             let link = "<p>"+ message.message + "</p>";
-            console.log(link);
+            let messageToServer = message.message;
+            console.log(messageToServer);
             $("#feed").append(link);
 
             //$.get("http://localhost:8081",function(result){
             //    console.log(result);
             //})
             let obj= {
-                text: link //seine Version war mit "Hier steht ein Text"
+                text: messageToServer //seine Version war mit "Hier steht ein Text"
             }
 
             $.ajax({
@@ -68,7 +69,7 @@ function showMessage() {
                 contentType: "application/json",
                 data: JSON.stringify(obj),
                 success: function(answer){
-                    console.log("juhu");
+                    console.log("Feed wurde erfolgreich uebertragen!");
                     console.log(answer);
                 }
             })
