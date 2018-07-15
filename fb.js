@@ -43,23 +43,26 @@ $(document).ready(function () {
 
 //function um message anzuzeigen
 function showMessage() {
+
     //Feed leeren
     $("#feed").empty().hide();
+
     //von FB Freunde Daten holen
     FB.api("/me?fields=feed.limit(3)", (list) => {
         console.log(list);
 
+        let id = 0;
         for (let message of list.feed.data){
             let link = "<p>"+ message.message + "</p>";
             let messageToServer = message.message;
             console.log(messageToServer);
             $("#feed").append(link);
+            id++;
+            console.log(id);
 
-            //$.get("http://localhost:8081",function(result){
-            //    console.log(result);
-            //})
             let obj= {
-                text: messageToServer //seine Version war mit "Hier steht ein Text"
+                id: id,
+                text: messageToServer //Feed Text der an den Server geschickt wird
             }
 
             $.ajax({
@@ -70,13 +73,22 @@ function showMessage() {
                 data: JSON.stringify(obj),
                 success: function(answer){
                     console.log("Feed wurde erfolgreich uebertragen!");
-                    console.log(answer);
+                    console.log(answer); //zeigt das Ergebnis
+
+                    let language = JSON.stringify(answer.documents[0].detectedLanguages[0].name);
+                    let languageOutput = JSON.parse(language);
+                    let idNumber = JSON.stringify(answer.documents[0].id);
+                    let idNumberOutput = JSON.parse(idNumber);
+
+                    let output = "<p> Die Sprache des " + idNumberOutput + ". Feeds ist: "+ languageOutput + "</p>";
+                    $("#analyse").append(output);
                 }
             })
 
         }
     });
     $("#feed").show();
+    $("#analyse").show();
 }
 
 function showMe(){

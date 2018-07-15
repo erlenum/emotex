@@ -21,19 +21,14 @@ let response_handler =
 
 app.post('/', function (req, res) {
     console.log(req. body);
+    console.log(req. id);
 
 
     //console.log(res);
     let documents = { 'documents': [
-            { 'id': '1', 'text': req.body.text }
+            { 'id': req.body.id , 'text': req.body.text }
         ]};
 
-    /*let documents = { 'documents': [
-
-            { 'id': '1', 'text': 'This is a document written in English.' },
-            { 'id': '2', 'text':  'Der Test.' }, // Hier muss statt diesem Text, unser Text hinein!
-            { 'id': '3', 'text': 'Test ' }
-        ]};*/
     let body = JSON.stringify (documents);
 
     let request_params = {
