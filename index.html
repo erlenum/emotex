@@ -4,7 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>EMOTEX</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
-    <link rel="stylesheet" type="text/css" href="css/dark-hive/jquery-ui-1.8.10.custom.css"></link>
 
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -12,6 +11,7 @@
             crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="fb.js"></script>
+
 </head>
 
 
@@ -44,20 +44,21 @@
     }(document, 'script', 'facebook-jssdk'));
 </script>
 
+<div class="headline">
+    <h1 >Willkommen bei EMOTEX!</h1>
+    <h4 >Das Analyse Tool für Ihren Facebook Account.</h4>
+</div>
 
-<h1>Hallo, willkommen zu EMOTEX!</h1>
-
+<div class="buttonHead">
 <button id="login" style="background-color: #3dbb95; border-color: #3dbb95; color: white;">Login</button>
-<button id="showdetails" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Me</button>
-<button id="showfriends" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Friends</button>
 <button id="logout" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Logout</button>
 <button id="feed1" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Feed</button>
 <button id="analyse1" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Language Analyse</button>
 <button id="analyse2" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Sentiment Analyse</button>
 <button id="analyse3" style="background-color: #3dbb95; border-color: #3dbb95; color: white;" disabled="true">Key Phrases Analyse</button>
+</div>
 
 <div id="user" class="content" style="display: none"></div>
-<div id="friends" class="content" style="display: none"></div>
 <div id="feed" class="content" style="display: none"></div>
 <div id="analyse" class="content" style="display: none"></div>
 <div id="analyseSenti" class="content" style="display: none"></div>

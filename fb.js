@@ -2,6 +2,7 @@
 $(document).ready(function () {
     console.log("jQuery loaded");
 
+    //login
     $("#login").click(()=>{
 
         FB.login((response)=>{
@@ -9,9 +10,13 @@ $(document).ready(function () {
             if(response.authResponse){
                 //alle Buttons einblenden
                 $("button").attr("disabled",false);
+                $("button").attr("style","background-color: #3dbb95; border-color: #3dbb95; color: white;");
+
                 //Login Button wieder ausblenden
                 $("#login").attr("disabled",true);
-                showMe ();
+                $("#login").attr("style", "background-color: #eeeeee;");
+
+                showMe();
             }
         },{perms: "email, user_birthday, user_location, user_hometown, user_likes, user_friends, user_link, user_feed"})
     });
@@ -22,21 +27,26 @@ $(document).ready(function () {
         //von FB ausloggen
         FB.logout(function (response) {
             $("button").attr("disabled",true);
+            $("button").attr("style", "background-color: #eeeeee;");
+
             $("#login").attr("disabled",false);
+            $("#login").attr("style","background-color: #3dbb95; border-color: #3dbb95; color: white;");
 
             //löschen von ev. angezeigten User Infos
             $("#user").empty().hide();
         })
     });
 
-    //friends
-    $("#showfriends").click(()=>{
-        showFriends();
-    });
-
     //Feed aus Seite auslesen
     $("#feed1").click(()=> {
         showMessage();
+
+        $("#analyse1").attr("disabled",false);
+        $("#analyse1").attr("style", "background-color: #3dbb95; border-color: #3dbb95; color: white;");
+        $("#analyse2").attr("disabled",false);
+        $("#analyse2").attr("style", "background-color: #3dbb95; border-color: #3dbb95; color: white;");
+        $("#analyse3").attr("disabled",false);
+        $("#analyse3").attr("style", "background-color: #3dbb95; border-color: #3dbb95; color: white;");
     });
 
     //Analyse der Feeds
@@ -70,12 +80,12 @@ function showMessage() {
 
         let id = 0;
         for (let message of list.feed.data){
+            id++;
             let ISOn = "";
-            let link = "<p>"+ message.message + "</p>";
+            let link = "<p>"+ id + ". Feed: " + message.message + "</p>";
             let messageToServer = message.message;
 
             $("#feed").append(link);
-            id++;
 
             let objL= {
                 analyse: "language",
@@ -92,11 +102,12 @@ function showMessage() {
                 data: JSON.stringify(objL),
                 success: function(answer){
 
+
                     let language = JSON.stringify(answer.documents[0].detectedLanguages[0].name);
                     let languageOutput = JSON.parse(language);
                     let idNumber = JSON.stringify(answer.documents[0].id);
                     let idNumberOutput = JSON.parse(idNumber);
-                    
+
                     let output = "<p> Die Sprache des " + idNumberOutput + ". Feeds ist: "+ languageOutput + "</p>";
                     $("#analyse").append(output);
 
@@ -124,7 +135,10 @@ function showMessage() {
                             let idNumber = JSON.stringify(answer.documents[0].id);
                             let idNumberOutput = JSON.parse(idNumber);
 
-                            let output = "<p> ID: " + idNumberOutput + " Sentiment: "+ sentimentOutput + "</p>";
+                            let num = sentimentOutput * 100;
+                            let percent = num.toFixed(2);
+
+                            let output = "<p> ID: " + idNumberOutput + " Sentiment: "+ percent + " % " + "</p>";
                             $("#analyseSenti").append(output);
 
                         }
@@ -173,7 +187,13 @@ function showMe(){
             $("#user").empty();
             $("#user").html(html);
             $("#user").show();
-            //showLocation(hometown);
+
+            $("#analyse1").attr("disabled",true);
+            $("#analyse1").attr("style", "background-color: #eeeeee;");
+            $("#analyse2").attr("disabled",true);
+            $("#analyse2").attr("style", "background-color: #eeeeee;");
+            $("#analyse3").attr("disabled",true);
+            $("#analyse3").attr("style", "background-color: #eeeeee;");
         }
     });
 }
@@ -185,32 +205,8 @@ function checkLoginStatus() {
             $("button").attr("disabled",false);
             //Login Button wieder ausblenden
             $("#login").attr("disabled",true);
-            showMe ();
+            $("#login").attr("style", "background-color: #eeeeee;");
+            showMe();
         }
     });
-}
-
-function showFriends(){
-    //Freundeliste leeren
-    $("#friends").empty().hide();
-    //von FB Freunde holen
-    FB.api("me/friends", (list)=>{
-        console.log(list);
-
-        for (let friend of list.data){
-            let link = '<a id="'+ friend.id + '" href="">'+friend.name + "</a>";
-            $("#friends").append(link);
-        }
-
-        $("#friends a").click( ()=>{
-            let id = $(this).attr("id");
-            console.log(id);
-            FB.api("/"+id, (friends)=>{
-                console.log(friends);
-            });
-        });
-
-    });
-
-    $("#friends").show();
 }
