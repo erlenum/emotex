@@ -3,9 +3,9 @@ $(document).ready(function () {
     console.log("jQuery loaded");
 
     $("#login").click(()=>{
-        console.log("Login geklickt");
+
         FB.login((response)=>{
-            console.log(response);
+
             if(response.authResponse){
                 //alle Buttons einblenden
                 $("button").attr("disabled",false);
@@ -18,10 +18,12 @@ $(document).ready(function () {
 
     //logout
     $("#logout").click(()=>{
+
         //von FB ausloggen
         FB.logout(function (response) {
             $("button").attr("disabled",true);
             $("#login").attr("disabled",false);
+
             //löschen von ev. angezeigten User Infos
             $("#user").empty().hide();
         })
@@ -37,30 +39,47 @@ $(document).ready(function () {
         showMessage();
     });
 
-    //.data["0"].message
-
+    //Analyse der Feeds
+    $("#analyse1").click(()=> {
+        $("#analyse").show();
     });
+
+    //Analyse der Feeds
+    $("#analyse2").click(()=> {
+        $("#analyseSenti").show();
+    });
+
+    //Analyse der Feeds
+    $("#analyse3").click(()=> {
+        $("#analyseKey").show();
+    });
+
+});
 
 //function um message anzuzeigen
 function showMessage() {
 
-    //Feed leeren
+    //Feed u. Analysen leeren
     $("#feed").empty().hide();
+    $("#analyse").empty().hide();
+    $("#analyseSenti").empty().hide();
+    $("#analyseKey").empty().hide();
 
-    //von FB Freunde Daten holen
+    //von FB Daten holen
     FB.api("/me?fields=feed.limit(3)", (list) => {
-        console.log(list);
 
         let id = 0;
         for (let message of list.feed.data){
+            let ISOn = "";
             let link = "<p>"+ message.message + "</p>";
             let messageToServer = message.message;
-            console.log(messageToServer);
+
             $("#feed").append(link);
             id++;
-            console.log(id);
 
-            let obj= {
+            let objL= {
+                analyse: "language",
+                language: ISOn,
                 id: id,
                 text: messageToServer //Feed Text der an den Server geschickt wird
             }
@@ -70,25 +89,77 @@ function showMessage() {
                 url: "http://localhost:8081",
                 dataType: 'json',
                 contentType: "application/json",
-                data: JSON.stringify(obj),
+                data: JSON.stringify(objL),
                 success: function(answer){
-                    console.log("Feed wurde erfolgreich uebertragen!");
-                    console.log(answer); //zeigt das Ergebnis
 
                     let language = JSON.stringify(answer.documents[0].detectedLanguages[0].name);
                     let languageOutput = JSON.parse(language);
                     let idNumber = JSON.stringify(answer.documents[0].id);
                     let idNumberOutput = JSON.parse(idNumber);
-
+                    
                     let output = "<p> Die Sprache des " + idNumberOutput + ". Feeds ist: "+ languageOutput + "</p>";
                     $("#analyse").append(output);
+
+                    let ISO = JSON.stringify(answer.documents[0].detectedLanguages[0].iso6391Name);
+                    let ISOOutput = JSON.parse(ISO);
+                    ISOn = ISOOutput;
+
+                    let objS= {
+                        analyse: "sentiment",
+                        language: ISOn,
+                        id: idNumberOutput,
+                        text: messageToServer //Feed Text der an den Server geschickt wird
+                    }
+
+                    $.ajax({
+                        type:'POST',
+                        url: "http://localhost:8081",
+                        dataType: 'json',
+                        contentType: "application/json",
+                        data: JSON.stringify(objS),
+                        success: function(answer){
+
+                            let sentiment = JSON.stringify(answer.documents[0].score);
+                            let sentimentOutput = JSON.parse(sentiment);
+                            let idNumber = JSON.stringify(answer.documents[0].id);
+                            let idNumberOutput = JSON.parse(idNumber);
+
+                            let output = "<p> ID: " + idNumberOutput + " Sentiment: "+ sentimentOutput + "</p>";
+                            $("#analyseSenti").append(output);
+
+                        }
+                    })
+
+                    let objK= {
+                        analyse: "keyPhase",
+                        language: ISOn,
+                        id: idNumberOutput,
+                        text: messageToServer //Feed Text der an den Server geschickt wird
+                    }
+
+                    $.ajax({
+                        type:'POST',
+                        url: "http://localhost:8081",
+                        dataType: 'json',
+                        contentType: "application/json",
+                        data: JSON.stringify(objK),
+                        success: function(answer){
+
+                            let key = JSON.stringify(answer.documents[0].keyPhrases);
+                            let keyOutput = JSON.parse(key);
+                            let idNumber = JSON.stringify(answer.documents[0].id);
+                            let idNumberOutput = JSON.parse(idNumber);
+
+                            let output = "<p> ID: " + idNumberOutput + " Key Phrases: "+ keyOutput + "</p>";
+                            $("#analyseKey").append(output);
+
+                        }
+                    })
                 }
             })
-
         }
     });
     $("#feed").show();
-    $("#analyse").show();
 }
 
 function showMe(){
