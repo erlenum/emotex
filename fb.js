@@ -18,7 +18,7 @@ $(document).ready(function () {
 
                 showMe();
             }
-        },{perms: "email, user_birthday, user_location, user_hometown, user_likes, user_friends, user_link, user_feed"})
+        },{scope: "email, user_birthday, user_location, user_hometown, user_likes, user_friends, user_link, user_posts"})
     });
 
     //logout
