@@ -14,7 +14,7 @@ $(document).ready(function () {
 
                 //Login Button wieder ausblenden
                 $("#login").attr("disabled",true);
-                $("#login").attr("style", "background-color: #eeeeee;");
+                $("#login").attr("style", "background-color: #eeeeee; border-color: #eeeeee; color: grey;");
 
                 showMe();
             }
@@ -27,7 +27,7 @@ $(document).ready(function () {
         //von FB ausloggen
         FB.logout(function (response) {
             $("button").attr("disabled",true);
-            $("button").attr("style", "background-color: #eeeeee;");
+            $("button").attr("style", "background-color: #eeeeee; border-color: #eeeeee; color: grey;");
 
             $("#login").attr("disabled",false);
             $("#login").attr("style","background-color: #3dbb95; border-color: #3dbb95; color: white;");
@@ -51,7 +51,7 @@ $(document).ready(function () {
 
     //Analyse der Feeds
     $("#analyse1").click(()=> {
-        $("#analyse").show();
+        $("#analyseLang").show();
     });
 
     //Analyse der Feeds
@@ -71,7 +71,7 @@ function showMessage() {
 
     //Feed u. Analysen leeren
     $("#feed").empty().hide();
-    $("#analyse").empty().hide();
+    $("#analyseLang").empty().hide();
     $("#analyseSenti").empty().hide();
     $("#analyseKey").empty().hide();
 
@@ -82,7 +82,7 @@ function showMessage() {
         for (let message of list.feed.data){
             id++;
             let ISOn = "";
-            let link = "<p>"+ id + ". Feed: " + message.message + "</p>";
+            let link = "<p style='font-weight: bold;'><span style='color: #3dbb95;'>"+ id + ". Feed: </span>" + message.message + "</p>";
             let messageToServer = message.message;
 
             $("#feed").append(link);
@@ -108,8 +108,8 @@ function showMessage() {
                     let idNumber = JSON.stringify(answer.documents[0].id);
                     let idNumberOutput = JSON.parse(idNumber);
 
-                    let output = "<p> Die Sprache des " + idNumberOutput + ". Feeds ist: "+ languageOutput + "</p>";
-                    $("#analyse").append(output);
+                    let output = "<p>Die Sprache des <span style='color: #3dbb95; font-weight: bold;'>" + idNumberOutput + ". Feeds</span> ist: <span style='font-weight: bold;'>"+ languageOutput + "</span></p>";
+                    $("#analyseLang").append(output);
 
                     let ISO = JSON.stringify(answer.documents[0].detectedLanguages[0].iso6391Name);
                     let ISOOutput = JSON.parse(ISO);
@@ -138,7 +138,16 @@ function showMessage() {
                             let num = sentimentOutput * 100;
                             let percent = num.toFixed(2);
 
-                            let output = "<p> ID: " + idNumberOutput + " Sentiment: "+ percent + " % " + "</p>";
+                            let emoji = "";
+                            if (percent > 65) {
+                                emoji = "&#128516;";
+                            } else if(percent < 45) {
+                                emoji = "&#128546;";
+                            } else {
+                                emoji = "&#128524;";
+                            }
+
+                            let output = "<span>Die Stimmung des <span style='color: #3dbb95; font-weight: bold;'>" + idNumberOutput + ". Feeds</span> ist: <span style='font-size: 14px;'>" + emoji + "</span><span style='font-weight: bold;'>(" + percent + " %)</span>" + "</p>";
                             $("#analyseSenti").append(output);
 
                         }
@@ -164,7 +173,7 @@ function showMessage() {
                             let idNumber = JSON.stringify(answer.documents[0].id);
                             let idNumberOutput = JSON.parse(idNumber);
 
-                            let output = "<p> ID: " + idNumberOutput + " Key Phrases: "+ keyOutput + "</p>";
+                            let output = "<p> Die Schlüsselwörter des <span style='color: #3dbb95; font-weight: bold;'>" + idNumberOutput + ". Feeds</span> sind: <span style='font-weight: bold;'>"+ keyOutput + "</span></p>";
                             $("#analyseKey").append(output);
 
                         }
@@ -189,11 +198,11 @@ function showMe(){
             $("#user").show();
 
             $("#analyse1").attr("disabled",true);
-            $("#analyse1").attr("style", "background-color: #eeeeee;");
+            $("#analyse1").attr("style", "background-color: #eeeeee; border-color: #eeeeee; color: grey;");
             $("#analyse2").attr("disabled",true);
-            $("#analyse2").attr("style", "background-color: #eeeeee;");
+            $("#analyse2").attr("style", "background-color: #eeeeee; border-color: #eeeeee; color: grey;");
             $("#analyse3").attr("disabled",true);
-            $("#analyse3").attr("style", "background-color: #eeeeee;");
+            $("#analyse3").attr("style", "background-color: #eeeeee; border-color: #eeeeee; color: grey;");
         }
     });
 }
@@ -205,7 +214,7 @@ function checkLoginStatus() {
             $("button").attr("disabled",false);
             //Login Button wieder ausblenden
             $("#login").attr("disabled",true);
-            $("#login").attr("style", "background-color: #eeeeee;");
+            $("#login").attr("style", "background-color: #eeeeee; border-color: #eeeeee; color: grey;");
             showMe();
         }
     });
