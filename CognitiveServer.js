@@ -19,15 +19,17 @@ let response_handler =
 
 app.post('/', function (req, res) {
 
+    // JSON Objekt, welches von fb.js geschickt wird
     let documents = { 'documents': [ //
             { 'id': req.body.id , 'language': req.body.language , 'text': req.body.text }
         ]};
 
-
+    // Objekt wird zur Analyse in eine Variable gespeichert
     let body = JSON.stringify (documents);
 
+    // Abfrage nach der gewünschten Analyse
     if ( req.body.analyse == "language") {
-        path = '/text/analytics/v2.0/languages';
+        path = '/text/analytics/v2.0/languages'; // Pfad wird danach ausgerichtet
     }
 
     if ( req.body.analyse == "sentiment") {
@@ -38,6 +40,7 @@ app.post('/', function (req, res) {
         path = '/text/analytics/v2.0/keyPhrases';
     }
 
+    // Request an den Server von Microsoft
     let request_params = {
         method: 'POST',
         hostname: uri,
@@ -47,6 +50,7 @@ app.post('/', function (req, res) {
         }
     };
 
+    // Daten werden ermittelt und wieder zurückgeschickt
     let request = https.request(request_params, function (response) {
         let body = '';
         response.on('data', function (d) {
@@ -66,6 +70,7 @@ app.post('/', function (req, res) {
         request.end();
 });
 
+//lokaler Server über welchen die Analyse-Daten laufen
 let cognitiveServer = app.listen(8081, function () {
     let host = cognitiveServer.address().address;
     let port = cognitiveServer.address().port;
