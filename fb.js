@@ -34,6 +34,11 @@ $(document).ready(function () {
 
             //löschen von ev. angezeigten User Infos
             $("#user").empty().hide();
+            $("#feed").empty().hide();
+            $("#analyseLang").empty().hide();
+            $("#analyseSenti").empty().hide();
+            $("#analyseKey").empty().hide();
+
         })
     });
 

@@ -19,7 +19,7 @@ let response_handler =
 
 app.post('/', function (req, res) {
 
-    let documents = { 'documents': [
+    let documents = { 'documents': [ //
             { 'id': req.body.id , 'language': req.body.language , 'text': req.body.text }
         ]};
 
